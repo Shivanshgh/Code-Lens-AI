@@ -8,6 +8,9 @@ st.set_page_config(
     page_icon="🔍",
     layout="wide",
     initial_sidebar_state="expanded"
+    st.sidebar.markdown("---")
+    st.sidebar.caption("Built with Gemini · AST · Streamlit")
+    st.sidebar.caption("v1.0 — Internship MVP")
 )
 
 from config.settings import check_api_key
