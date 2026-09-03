@@ -6,7 +6,8 @@ from database.db import save_review
 from samples.code_samples import GET_SAMPLE_CODE
 
 def render_review_page():
-    st.header("🔬 Code Review Agent")
+    from ui.styles import hero_banner
+    hero_banner("🔬 Code Review Agent", "Paste your code below and let the AI agents find what's broken.")
     
     # State management
     if "code_input" not in st.session_state:
@@ -58,7 +59,20 @@ def render_review_page():
         
         c1, c2 = st.columns([1, 4])
         with c1:
-            st.metric("Code Quality Score", f"{res['score']}/100")
+            score = res['score']
+            ring_color = "#3FB950" if score >= 80 else "#D29922" if score >= 50 else "#F85149"
+            st.markdown(f"""
+            <div style="text-align:center;">
+                <svg width="120" height="120">
+                    <circle cx="60" cy="60" r="50" stroke="#30363D" stroke-width="10" fill="none"/>
+                    <circle cx="60" cy="60" r="50" stroke="{ring_color}" stroke-width="10" fill="none"
+                        stroke-dasharray="{score*3.14}, 314" stroke-linecap="round" transform="rotate(-90 60 60)"/>
+                    <text x="60" y="68" text-anchor="middle" font-size="26" font-weight="800" fill="white">{score}</text>
+                </svg>
+                <p style="color:#8B949E; margin-top:-8px;">/ 100</p>
+            </div>
+            """, unsafe_allow_html=True)
+            
         with c2:
             st.write("**Summary:**")
             st.write(res['summary'])
