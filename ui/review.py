@@ -66,8 +66,10 @@ def render_review_page():
         st.subheader(f"Detected Issues ({len(res['issues'])})")
         
         for issue in res['issues']:
+            SEV_CLASS = {"Critical":"sev-critical","High":"sev-high","Medium":"sev-medium","Low":"sev-low","Info":"sev-info"}
             color = "🔴" if issue['severity'] in ["Critical", "High"] else "🟡" if issue['severity'] == "Medium" else "🔵"
             with st.expander(f"{color} [{issue['category']}] {issue['title']} (Line {issue['line'] or 'N/A'})"):
+                                st.markdown(f'<span class="severity-badge {SEV_CLASS.get(issue["severity"],"sev-info")}">{issue["severity"]}</span> <span class="category-badge">{issue["category"]}</span>', unsafe_allow_html=True)
                 st.markdown(f"**Severity:** {issue['severity']}")
                 st.markdown(f"**Description:** {issue['description']}")
                 st.markdown(f"**Impact:** {issue['impact']}")
