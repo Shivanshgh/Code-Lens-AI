@@ -20,8 +20,8 @@ from ui.history import render_history_page
 
 def main():
     load_dotenv()
-    inject_css()
     init_db()
+    inject_css()
     
     st.sidebar.title("🔍 CodeLens AI")
     st.sidebar.caption("Find bugs. Understand them. Fix them.")
